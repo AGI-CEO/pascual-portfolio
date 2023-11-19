@@ -7,9 +7,9 @@ import Alien from "./models/Alien";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-2">
+    <main className="flex h-screen  flex-col items-center justify-between p-2">
       <Canvas
-        className="w-full h-screen bg-transparent"
+        className="w-full h-screen bg-white opacity-50"
         camera={{ near: 0.1, far: 1000 }}
       >
         <Suspense fallback={Loading}>
