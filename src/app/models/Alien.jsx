@@ -12,11 +12,9 @@ import { useFrame, useThree } from "@react-three/fiber";
 
 import { a } from "@react-spring/three";
 
-//import islandScene from "/assets/3d/island.glb";
-
 const Alien = (props) => {
   const alienRef = useRef();
-  const { nodes, materials } = useGLTF("/models/xeno_raven.glb");
+  const { nodes, materials } = useGLTF("models/xeno_raven.glb");
   return (
     <>
       <a.group ref={alienRef} {...props} dispose={null}>
