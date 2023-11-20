@@ -1,51 +1,53 @@
 "use client";
 import Image from "next/image";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useState } from "react";
+import { Suspense, useState, useEffect } from "react";
 import Loading from "./loading";
 import Alien from "./models/Alien";
 import Sky from "./models/Sky";
 import Island from "./models/Island";
 import Bird from "./models/Bird";
 import Plane from "./models/Plane";
+import HomeInfo from "./HomeInfo";
 
 export default function Home() {
   const [isRotating, setIsRotating] = useState(false);
   const [currentStage, setCurrentStage] = useState(1);
+  const [screenScale, setScreenScale] = useState([1, 1.1, 1.1]);
+  const [screenPosition, setScreenPosition] = useState([0, -6.5, -43]);
+  const [rotation, setRotation] = useState([0.1, 4.7, 0]);
+  const [planeScale, setPlaneScale] = useState([3, 3, 3]);
+  const [planePosition, setPlanePosition] = useState([0, -4, -4]);
 
-  const adjustForScreenSize = () => {
-    let screenScale = null;
-    let screenPosition = [0, -6.5, -43];
-    let rotation = [0.1, 4.7, 0];
-
-    if (window.innerWidth < 768) {
-      screenScale = [0.9, 0.9, 0.9];
-    } else {
-      screenScale = [1, 1.1, 1.1];
+  // Adjust scale and position based on screen size
+  useEffect(() => {
+    function adjustForScreenSize() {
+      if (window.innerWidth < 768) {
+        setScreenScale([0.9, 0.9, 0.9]);
+        setPlaneScale([1.5, 1.5, 1.5]);
+        setPlanePosition([0, -1.5, 0]);
+      } else {
+        setScreenScale([1, 1.1, 1.1]);
+        setPlaneScale([3, 3, 3]);
+        setPlanePosition([0, -4, -4]);
+      }
     }
 
-    return [screenScale, screenPosition, rotation];
-  };
-  const adjustPlaneForScreenSize = () => {
-    let screenScale, screenPosition;
+    adjustForScreenSize(); // Adjust on mount
 
-    if (window.innerWidth < 768) {
-      screenScale = [1.5, 1.5, 1.5];
-      screenPosition = [0, -1.5, 0];
-    } else {
-      screenScale = [3, 3, 3];
-      screenPosition = [0, -4, -4];
-    }
+    // Adjust when window resizes
+    window.addEventListener("resize", adjustForScreenSize);
 
-    return [screenScale, screenPosition];
-  };
-
-  const [planeScale, planePosition] = adjustPlaneForScreenSize();
-
-  const [screenScale, screenPosition, rotation] = adjustForScreenSize();
+    // Cleanup event listener on unmount
+    return () => window.removeEventListener("resize", adjustForScreenSize);
+  }, []);
 
   return (
     <main className="flex h-screen  flex-col items-center justify-between p-2 relative">
+      <div className="absolute top-28 left-0 right-0 z-10 flex items-center justify-center">
+        {currentStage && <HomeInfo currentStage={currentStage} />}
+      </div>
+
       <Canvas
         className={`w-full h-screen bg-transparent ${
           isRotating ? "cursor-grabbing" : "cursor-grab"

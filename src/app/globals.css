@@ -25,3 +25,10 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+info-box {
+  --info-box-background-start-rgb: 255, 255, 255;
+  --info-box-background-end-rgb: 255, 255, 255;
+  --info-box-foreground-rgb: 0, 0, 0;
+  --info-box-border-rgb: 0, 0, 0;
+}
