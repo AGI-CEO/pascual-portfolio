@@ -1,10 +1,15 @@
 "use client";
 import React, { Suspense, useRef, useState } from "react";
 import useAlert from "./useAlert";
-import { Canvas } from "@react-three/fiber";
 import Loading from "../loading";
 import Alert from "../Alert";
 import Fox from "../models/Fox";
+import dynamic from "next/dynamic";
+
+const Canvas = dynamic(
+  () => import("@react-three/fiber").then((mod) => mod.Canvas),
+  { ssr: false }
+);
 
 const Contact = () => {
   const formRef = useRef();

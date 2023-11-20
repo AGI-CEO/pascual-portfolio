@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React from "react";
 
-const NavBar = () => {
+const NavBar2 = () => {
   return (
     <header className="header">
       <div className="flex flex-row w-screen items-center p-5 justify-center z-10">
@@ -34,4 +34,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default NavBar2;

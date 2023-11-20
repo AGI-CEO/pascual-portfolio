@@ -42,7 +42,7 @@ info-box {
 .form-label {
   display: block; /* Ensures the label takes up the full width and positions above the input/textarea */
   margin-bottom: 0.5rem; /* Adds some space between the label and the input/textarea */
-  color: #333; /* Example color - change as needed */
+  color: #ccc; /* Lightened color as per instructions */
 }
 
 .form-container h1 {
@@ -56,6 +56,7 @@ info-box {
   padding: 0.5rem;
   border: 1px solid #ccc; /* Example border - change as needed */
   border-radius: 0.25rem;
+  color: #ccc; /* Light text color */
 }
 
 .label {
