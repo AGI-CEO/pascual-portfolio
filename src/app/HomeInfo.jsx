@@ -9,7 +9,8 @@ const HomeInfo = ({ currentStage }) => {
           Hi, I'm
           <span className="font-semibold mx-2 text-black">Blaise</span>
           👋
-          <br /> I'm a full-stack AI Software Engineer
+          <br /> I'm a seasoned leader and innovator, leveraging my skills into
+          the world of AI and automation with LangLabs.
         </label>
       </div>
     );
@@ -18,8 +19,9 @@ const HomeInfo = ({ currentStage }) => {
     return (
       <div className="info-box">
         <p className="font-medium sm:text-xl text-center">
-          Worked with many companies <br /> and picked up many skills along the
-          way
+          Merging diverse background in science, leadership, and strategic
+          planning to address the challenges businesses face when implementing
+          AI solutions.
         </p>
 
         <Link href="/about" className="neo-brutalism-white neo-btn">
@@ -38,8 +40,8 @@ const HomeInfo = ({ currentStage }) => {
     return (
       <div className="info-box">
         <p className="font-medium text-center sm:text-xl">
-          Led multiple projects to success over the years. <br /> Curious about
-          the impact?
+          Passionate about supporting veterans, fostering small business growth,
+          promoting entrepreneurship, and advancing artificial intelligence.
         </p>
 
         <Link href="/projects" className="neo-brutalism-white neo-btn">
@@ -58,11 +60,11 @@ const HomeInfo = ({ currentStage }) => {
     return (
       <div className="info-box">
         <p className="font-medium sm:text-xl text-center">
-          Need a project done or looking for a dev? <br /> I'm just a few
-          keystrokes away
+          Intrigued by AI solutions or wish to connect? Don't hesitate to reach
+          out.
         </p>
 
-        <Link href="/contact" className="neo-brutalism-white neo-btn">
+        <Link href="/contact" className="btn-square ">
           Let's talk
           <img
             src="/assets/icons/arrow"
