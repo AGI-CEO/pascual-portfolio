@@ -35,17 +35,19 @@ const Contact = () => {
       });
 
       const data = await response.json();
-      setLoading(false);
 
-      if (data.success) {
-        showAlert("Message sent successfully", "success");
-        setForm({ name: "", email: "", message: "" });
-      } else {
-        showAlert("Error sending message", "error");
+      if (data.status !== 201) {
+        throw new Error("Error sending message");
       }
+
+      setLoading(false);
+      console.log("About to show success alert");
+      showAlert({ text: "Message sent successfully", type: "success" });
+      setForm({ name: "", email: "", message: "" });
     } catch (error) {
       setLoading(false);
-      showAlert("Error sending message", "error");
+      console.log("About to show error alert");
+      showAlert(error.message, "error");
     }
   };
 
