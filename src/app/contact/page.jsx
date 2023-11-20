@@ -3,6 +3,7 @@ import React, { Suspense, useRef, useState } from "react";
 import useAlert from "./useAlert";
 import { Canvas } from "@react-three/fiber";
 import Loading from "../loading";
+import Alert from "../Alert";
 import Fox from "../models/Fox";
 
 const Contact = () => {
@@ -19,32 +20,33 @@ const Contact = () => {
   const handleFocus = () => setCurrentAnimation("walk");
   const handleBlur = () => setCurrentAnimation("idle");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setCurrentAnimation("hit");
 
-    fetch("/api/contact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setLoading(false);
-        if (data.success) {
-          showAlert("Message sent successfully", "success");
-          setForm({ name: "", email: "", message: "" });
-        } else {
-          showAlert("Error sending message", "error");
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
-        showAlert("Error sending message", "error");
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
       });
+
+      const data = await response.json();
+      setLoading(false);
+
+      if (data.success) {
+        showAlert("Message sent successfully", "success");
+        setForm({ name: "", email: "", message: "" });
+      } else {
+        showAlert("Error sending message", "error");
+      }
+    } catch (error) {
+      setLoading(false);
+      showAlert("Error sending message", "error");
+    }
   };
 
   return (
@@ -52,20 +54,20 @@ const Contact = () => {
       {alert.show && <Alert {...alert} />}
 
       <div className="flex-1 min-w-[50%] flex flex-col">
-        <h1 className="head-text">Get in Touch</h1>
+        <h1 className="text-2xl text-center">Get in Touch</h1>
 
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className="w-full flex flex-col gap-7 mt-14"
+          className="form-container m-5 p-5"
         >
-          <label className="text-black-500 font-semibold">
+          <label className="label">
             Name
             <input
               type="text"
               name="name"
               className="input"
-              placeholder="John"
+              placeholder="Sam Altman"
               required
               value={form.name}
               onChange={handleChange}
@@ -73,13 +75,13 @@ const Contact = () => {
               onBlur={handleBlur}
             />
           </label>
-          <label className="text-black-500 font-semibold">
+          <label className="label">
             Email
             <input
               type="email"
               name="email"
               className="input"
-              placeholder="John@gmail.com"
+              placeholder="sama@openai.com"
               required
               value={form.email}
               onChange={handleChange}
@@ -87,7 +89,7 @@ const Contact = () => {
               onBlur={handleBlur}
             />
           </label>
-          <label className="text-black-500 font-semibold">
+          <label className="label">
             Your Message
             <textarea
               name="message"
@@ -132,7 +134,7 @@ const Contact = () => {
             intensity={2}
           />
 
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={Loading}>
             <Fox
               currentAnimation={currentAnimation}
               position={[0.5, 0.35, 0]}
