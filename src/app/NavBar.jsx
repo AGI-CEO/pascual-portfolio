@@ -6,7 +6,7 @@ import React from "react";
 const NavBar = () => {
   return (
     <header className="header">
-      <div className="flex flex-row w-full items-center p-1 m-1 justify-center absolute z-10">
+      <div className="flex flex-row w-screen items-center p-5 justify-center absolute z-10">
         <div className="flex flex-row justify-start items-center w-80">
           <Link
             href="/"
@@ -20,7 +20,7 @@ const NavBar = () => {
         </div>
         <div className="flex flex-row gap-7">
           <Link href="/about" passHref>
-            <p>About Me</p>
+            <p>About</p>
           </Link>
           <Link href="/resume" passHref>
             <button type="button">Resume</button>
