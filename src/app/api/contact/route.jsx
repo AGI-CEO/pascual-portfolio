@@ -6,5 +6,12 @@ const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function POST(req = NextRequest, res = NextResponse) {
-  const { name, email, message } = req.body;
+  const body = await req.json();
+
+  const { name, email, message } = body;
+
+  const newMessage = await supabase
+    .from("messages")
+    .insert([{ name, email, message }]);
+  return NextResponse.json(newMessage, { status: 201 });
 }
