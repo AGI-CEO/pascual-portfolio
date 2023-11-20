@@ -7,7 +7,7 @@ const NavBar = () => {
   return (
     <header className="header">
       <nav className="p-1 m-1">
-        <div className="flex flex-row items-center justify-center">
+        <div className="flex flex-row items-center justify-center ">
           <div className="flex flex-row justify-start items-center w-80">
             <Link
               href="/"
