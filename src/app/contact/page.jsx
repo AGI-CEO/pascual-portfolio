@@ -3,6 +3,7 @@ import React, { Suspense, useRef, useState } from "react";
 import useAlert from "./useAlert";
 import { Canvas } from "@react-three/fiber";
 import Loading from "../loading";
+import Fox from "../models/Fox";
 
 const Contact = () => {
   const formRef = useRef();
@@ -22,6 +23,28 @@ const Contact = () => {
     e.preventDefault();
     setLoading(true);
     setCurrentAnimation("hit");
+
+    fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setLoading(false);
+        if (data.success) {
+          showAlert("Message sent successfully", "success");
+          setForm({ name: "", email: "", message: "" });
+        } else {
+          showAlert("Error sending message", "error");
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        showAlert("Error sending message", "error");
+      });
   };
 
   return (
