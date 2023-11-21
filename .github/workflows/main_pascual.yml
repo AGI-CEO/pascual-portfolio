@@ -32,6 +32,7 @@ jobs:
         run: |
           bun install
           bun run build
+          bun run start
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3

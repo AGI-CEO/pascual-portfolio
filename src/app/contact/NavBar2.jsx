@@ -22,11 +22,8 @@ const NavBar2 = () => {
           <Link href="/about" passHref>
             <p>About</p>
           </Link>
-          <Link href="/resume" passHref>
-            <button type="button">Resume</button>
-          </Link>
-          <Link href="/projects" passHref>
-            <button type="button">Projects</button>
+          <Link href="/contact" passHref>
+            <button type="button">Contact</button>
           </Link>
         </div>
       </div>
