@@ -25,13 +25,13 @@ jobs:
         with:
           bun-version: latest
 
-      - name: bun install, build, and test
+      - name: npm install, build, and test
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: |
-          bun install
-          bun run build
+          npm install
+          npm run build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
