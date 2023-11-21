@@ -12,9 +12,16 @@ import { useFrame, useThree } from "@react-three/fiber";
 
 import { a } from "@react-spring/three";
 
-const Alien = (props) => {
+const Alien = ({ isRotating, ...props }) => {
   const alienRef = useRef();
   const { nodes, materials } = useGLTF("models/xeno_raven.glb");
+
+  useFrame(() => {
+    if (isRotating) {
+      alienRef.current.rotation.y -= 0.01;
+    }
+  });
+
   return (
     <>
       <a.group ref={alienRef} {...props} dispose={null}>

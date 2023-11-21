@@ -1,4 +1,6 @@
+"use client";
 import React from "react";
+import Skills from "./Skills";
 
 const About = () => {
   return (
@@ -41,6 +43,7 @@ const About = () => {
           of AI together! 💪🔥
         </p>
       </div>
+      <Skills />
     </section>
   );
 };

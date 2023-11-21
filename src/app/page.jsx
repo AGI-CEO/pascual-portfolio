@@ -74,19 +74,19 @@ export default function Home() {
           />
           <Plane
             isRotating={isRotating}
-            planeScale={planeScale}
-            planePosition={planePosition}
+            scale={planeScale}
+            position={planePosition}
             rotation={[0, 20, 0]}
           />
 
-          {/*<Alien
-            position={screenPosition}
-            scale={screenScale}
+          {/* <Alien
+            position={[0, -23, -15]}
+            scale={[0.05, 0.05, 0.05]}
             rotation={rotation}
-  />*/}
+            isRotating={isRotating}
+      />*/}
         </Suspense>
       </Canvas>
-      <p>still here</p>
     </main>
   );
 }
