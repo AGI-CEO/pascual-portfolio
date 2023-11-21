@@ -22,10 +22,10 @@ const NavBar = () => {
           <Link href="/about" passHref>
             <p>About</p>
           </Link>
-          <Link href="/resume" passHref>
+          <Link href="https://www.linkedin.com/in/blaise-pascual/" passHref>
             <button type="button">Resume</button>
           </Link>
-          <Link href="/projects" passHref>
+          <Link href="https://github.com/AGI-CEO" passHref>
             <button type="button">Projects</button>
           </Link>
         </div>
