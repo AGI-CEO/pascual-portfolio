@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  swcMinify: true,
+  target: "serverless",
+  reactStrictMode: true,
+};
 
 module.exports = nextConfig;
