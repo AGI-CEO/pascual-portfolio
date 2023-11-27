@@ -1,9 +1,7 @@
 "use client";
-import Image from "next/image";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useState, useEffect } from "react";
 import Loading from "./loading";
-import Alien from "./models/Alien";
 import Sky from "./models/Sky";
 import Island from "./models/Island";
 import Bird from "./models/Bird";
