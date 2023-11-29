@@ -36,8 +36,8 @@ const HomeInfo = ({ currentStage }) => {
           I am a passionate creator, and I love to build things. Check out some
           of my projects 👍
         </label>
-        <Link href="/projects" className="btn btn-primary">
-          Visit my portfolio
+        <Link href="https://github.com/AGI-CEO" className="btn btn-primary">
+          Check my GitHub
         </Link>
       </div>
     );
