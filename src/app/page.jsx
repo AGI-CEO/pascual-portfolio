@@ -5,7 +5,7 @@ import Loading from "./loading";
 import Sky from "./models/Sky";
 import Island from "./models/BetterIsland";
 import Bird from "./models/Bird";
-import Plane from "./models/Plane";
+import Plane from "./models/BetterPlane";
 import HomeInfo from "./HomeInfo";
 
 export default function Home() {
@@ -21,13 +21,13 @@ export default function Home() {
   useEffect(() => {
     function adjustForScreenSize() {
       if (window.innerWidth < 768) {
-        setScreenScale([0.9, 0.9, 0.9]);
-        setPlaneScale([1.5, 1.5, 1.5]);
-        setPlanePosition([0, -2.5, 0]);
+        setScreenScale([1.3, 1.5, 1.3]);
+        setPlaneScale([0.05, 0.05, 0.05]);
+        setPlanePosition([0, -10, -10]);
       } else {
         setScreenScale([1.7, 1.7, 1.7]);
-        setPlaneScale([3, 3, 3]);
-        setPlanePosition([0, -2, -4]);
+        setPlaneScale([0.05, 0.05, 0.05]);
+        setPlanePosition([0, -10, -10]);
       }
     }
 
