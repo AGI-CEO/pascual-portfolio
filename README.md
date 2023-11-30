@@ -58,8 +58,6 @@ bun run dev
 
 Now, you should be able to see the project running on localhost.
 
-For the implementation of Three.js in this project, I loosely followed this tutorial: [Three.js Tutorial](https://www.youtube.com/watch?v=FkowOdMjvYo&t). However, the entirety of the code was written by me, using the tutorial only as a reference for learning Three.js and as an introduction to building 3d web applications.
-
 ## Thank you
 
 I hope you enjoy exploring my portfolio!
