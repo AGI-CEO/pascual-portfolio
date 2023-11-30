@@ -105,13 +105,8 @@ export default function Home() {
     return () => window.removeEventListener("resize", adjustForScreenSize);
   }, []);
   useEffect(() => {
-    // Simulate loading
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000); // Increase this delay if necessary
-
-    // Cleanup timer on unmount
-    return () => clearTimeout(timer);
+    // No loading simulation needed
+    setIsLoading(false);
   }, []);
 
   return (
@@ -122,9 +117,13 @@ export default function Home() {
         </div>
       ) : (
         <div
-          className={`w-full h-screen bg-black`}
+          className={`w-full h-screen bg-transparent `}
           style={{ opacity: isLoading ? 0 : 1, transition: "opacity 5s" }}
         >
+          <div className="absolute top-28 left-0 right-0 z-10 flex items-center justify-center">
+            <HomeInfo currentStage={currentStage} />
+          </div>
+
           <Canvas
             className={`w-full h-screen bg-transparent ${
               isRotating ? "cursor-grabbing" : "cursor-grab"
