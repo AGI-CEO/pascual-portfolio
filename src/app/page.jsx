@@ -3,11 +3,12 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Suspense, useState, useEffect, useRef } from "react";
 import {
   PointLight,
-  Points,
   PointsMaterial,
   BufferGeometry,
   Vector3,
   Color,
+  BufferAttribute,
+  Points,
 } from "three";
 
 import Loading from "./loading";
@@ -16,6 +17,7 @@ import Island from "./models/BetterIsland";
 import Bird from "./models/Bird";
 import Plane from "./models/BetterPlane";
 import HomeInfo from "./HomeInfo";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 
 // Utility to create particle positions
 function createParticles(count, distance) {
@@ -39,7 +41,7 @@ const MovingLight = () => {
     lightRef.current.position.x = Math.sin(time) * 10;
     lightRef.current.position.y = Math.cos(time) * 10;
     lightRef.current.position.z = Math.cos(time) * 10;
-    lightRef.current.intensity = 2 + Math.sin(time * 2);
+    lightRef.current.intensity = 10 + Math.sin(time * 5);
   });
 
   return <pointLight ref={lightRef} args={["#a2b9c8", 2, 100]} castShadow />;
@@ -48,24 +50,25 @@ const MovingLight = () => {
 // Particle System Component
 const Particles = () => {
   const particlesRef = useRef();
-  const particlePositions = createParticles(1000, 500);
+  const particlePositions = createParticles(1000, 100); // Reduced distance
 
   useFrame(() => {
     particlesRef.current.rotation.y += 0.001; // Rotate particles for effect
   });
 
+  const geometry = new BufferGeometry();
+  geometry.setAttribute("position", new BufferAttribute(particlePositions, 3));
+
   return (
-    <points ref={particlesRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attachObject={["attributes", "position"]}
-          count={particlePositions.length / 3}
-          array={particlePositions}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <pointsMaterial args={[{ color: new Color("#ffffff"), size: 0.5 }]} />
-    </points>
+    <primitive
+      ref={particlesRef}
+      object={
+        new Points(
+          geometry,
+          new PointsMaterial({ color: "#red", size: 0.0001 })
+        )
+      }
+    />
   );
 };
 
@@ -113,49 +116,56 @@ export default function Home() {
         }`}
         camera={{ near: 0.1, far: 10000 }}
       >
-        <Suspense fallback={Loading}>
-          <directionalLight
-            position={[1, 1, 1]}
-            intensity={2.5}
-            color="#a2b9c8"
+        <EffectComposer>
+          <Bloom
+            luminanceThreshold={0.01}
+            luminanceSmoothing={0.3}
+            height={100}
           />
-          <ambientLight intensity={0.3} />
-          <hemisphereLight
-            skyColor="#6a89cc"
-            groundColor="#b8b8b8"
-            intensity={0.75}
-          />
-          <pointLight
-            position={[-1, 2, -1]}
-            color="#c7d5e0"
-            intensity={1.5}
-            distance={100}
-          />
-          <MovingLight /> {/* Dynamic light */}
-          <Particles /> {/* Particle system */}
-          <Sky isRotating={isRotating} />
-          <Bird />
-          <Island
-            position={screenPosition}
-            scale={screenScale}
-            rotation={rotation}
-            isRotating={isRotating}
-            setIsRotating={setIsRotating}
-            setCurrentStage={setCurrentStage}
-          />
-          <Plane
-            isRotating={isRotating}
-            scale={planeScale}
-            position={planePosition}
-            rotation={[0, 20, 0]}
-          />
-          {/* <Alien
+          <Suspense fallback={Loading}>
+            <directionalLight
+              position={[1, 1, 1]}
+              intensity={2.5}
+              color="#a2b9c8"
+            />
+            <ambientLight intensity={0.3} />
+            <hemisphereLight
+              skyColor="#6a89cc"
+              groundColor="#b8b8b8"
+              intensity={0.75}
+            />
+            <pointLight
+              position={[-1, 2, -1]}
+              color="#c7d5e0"
+              intensity={1.5}
+              distance={100}
+            />
+            <MovingLight /> {/* Dynamic light */}
+            <Particles /> {/* Particle system */}
+            <Sky isRotating={isRotating} />
+            <Bird />
+            <Island
+              position={screenPosition}
+              scale={screenScale}
+              rotation={rotation}
+              isRotating={isRotating}
+              setIsRotating={setIsRotating}
+              setCurrentStage={setCurrentStage}
+            />
+            <Plane
+              isRotating={isRotating}
+              scale={planeScale}
+              position={planePosition}
+              rotation={[0, 20, 0]}
+            />
+            {/* <Alien
             position={[0, -23, -15]}
             scale={[0.05, 0.05, 0.05]}
             rotation={rotation}
             isRotating={isRotating}
       />*/}
-        </Suspense>
+          </Suspense>
+        </EffectComposer>
       </Canvas>
     </main>
   );

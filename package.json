@@ -12,6 +12,7 @@
     "@react-spring/three": "^9.7.3",
     "@react-three/drei": "^9.88.16",
     "@react-three/fiber": "^8.15.11",
+    "@react-three/postprocessing": "^2.15.11",
     "@supabase/supabase-js": "^2.38.4",
     "ai-jsx": "^0.28.0",
     "axios": "^1.6.2",
