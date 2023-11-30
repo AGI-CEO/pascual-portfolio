@@ -122,7 +122,7 @@ export default function Home() {
         </div>
       ) : (
         <div
-          className={`w-full h-screen bg-transparent`}
+          className={`w-full h-screen bg-black`}
           style={{ opacity: isLoading ? 0 : 1, transition: "opacity 5s" }}
         >
           <Canvas
@@ -130,6 +130,9 @@ export default function Home() {
               isRotating ? "cursor-grabbing" : "cursor-grab"
             }`}
             camera={{ near: 0.1, far: 10000 }}
+            style={{
+              animation: !isLoading ? "fadeIn 5s" : undefined,
+            }}
           >
             <EffectComposer>
               <Bloom
