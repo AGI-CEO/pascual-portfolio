@@ -80,6 +80,7 @@ export default function Home() {
   const [rotation, setRotation] = useState([0.1, 4.7, 0]);
   const [planeScale, setPlaneScale] = useState([3, 3, 3]);
   const [planePosition, setPlanePosition] = useState([0, -4, -4]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Adjust scale and position based on screen size
   useEffect(() => {
@@ -103,13 +104,20 @@ export default function Home() {
     // Cleanup event listener on unmount
     return () => window.removeEventListener("resize", adjustForScreenSize);
   }, []);
+  useEffect(() => {
+    // Simulate loading
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
 
   return (
-    <main className="flex h-screen  flex-col items-center justify-between p-2 relative">
-      <div className="absolute top-28 left-0 right-0 z-10 flex items-center justify-center">
-        {currentStage && <HomeInfo currentStage={currentStage} />}
-      </div>
-      <Suspense fallback={Loading}>
+    <main className="flex h-screen flex-col items-center justify-between p-2 relative">
+      {isLoading ? (
+        <div className="w-full h-screen flex items-center justify-center">
+          <Loading />
+        </div>
+      ) : (
         <Canvas
           className={`w-full h-screen bg-transparent ${
             isRotating ? "cursor-grabbing" : "cursor-grab"
@@ -165,7 +173,7 @@ export default function Home() {
       />*/}
           </EffectComposer>
         </Canvas>
-      </Suspense>
+      )}
     </main>
   );
 }
