@@ -50,7 +50,7 @@ const MovingLight = () => {
 // Particle System Component
 const Particles = () => {
   const particlesRef = useRef();
-  const particlePositions = createParticles(1000, 100); // Reduced distance
+  const particlePositions = createParticles(100, 10); // Reduced distance
 
   useFrame(() => {
     particlesRef.current.rotation.y += 0.001; // Rotate particles for effect
