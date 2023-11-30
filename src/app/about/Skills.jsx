@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Pagination from "react-js-pagination";
 
-const Skills = () => {
-  const [skills, setSkills] = useState([]);
+const Skills = ({ skills }) => {
   const [filter, setFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [filteredSkills, setFilteredSkills] = useState([]);
   const itemsPerPage = 10;
 
   useEffect(() => {
-    axios
-      .get("api/skills")
-      .then((response) => {
-        setSkills(response.data);
-      })
-      .catch((error) => {
-        console.error(`Error fetching data: ${error}`);
-      });
-  }, []);
+    console.log(`Filter is now: ${filter}`);
+    let result;
+    if (filter) {
+      result = skills.filter((skill) => skill.type === filter);
+    } else {
+      result = skills;
+    }
+    console.log("Filtered skills:", result);
+    setFilteredSkills(result);
+  }, [skills, filter]);
 
-  const filteredSkills = skills.filter((skill) => skill.type.includes(filter));
   const totalPages = Math.ceil(filteredSkills.length / itemsPerPage);
 
   const skillsOnCurrentPage = filteredSkills.slice(
@@ -42,13 +41,19 @@ const Skills = () => {
         </div>
         <ul className="dropdown-content z-[1] menu  m-5 shadow bg-base-100 rounded-box  grid grid-cols-2  mx-1 px-1">
           <li>
-            <a role="button" onClick={() => setFilter("")}>
-              Filter by skill type
-            </a>
+            <button
+              role="button"
+              onClick={() => {
+                console.log("Clearing filter");
+                setFilter("");
+              }}
+            >
+              Clear filter
+            </button>
           </li>
           {skillTypes.map((type) => (
             <li key={type}>
-              <a
+              <button
                 role="button"
                 onClick={() => {
                   console.log(`Setting filter to: ${type}`);
@@ -56,7 +61,7 @@ const Skills = () => {
                 }}
               >
                 {type}
-              </a>
+              </button>
             </li>
           ))}
         </ul>

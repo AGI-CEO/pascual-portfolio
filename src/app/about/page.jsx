@@ -1,10 +1,28 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Skills from "./Skills";
+import axios from "axios";
 
 const About = () => {
+  const [skills, setSkills] = useState([]);
+
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        console.log("Fetching skills data...");
+
+        const response = await axios.get("/api/skills");
+        console.log(response);
+        setSkills(response.data);
+      } catch (error) {
+        console.error("Error fetching skills:", error);
+      }
+    };
+    fetchSkills();
+  }, []);
+
   return (
-    <section className="max-container m-5 p-5 w-5/6 justify-center mx-auto">
+    <section className="max-container m-5 p-5 w-full justify-center mx-auto">
       <h1 className="head-text text-3xl text-center ">
         Hi, I'm{" "}
         <span className="font-semibold bg-gradient-to-br from-yellow-300 to-pink-500 text-transparent  bg-clip-text items-center justify-center flex flex-row text-3xl text-center">
@@ -43,7 +61,7 @@ const About = () => {
           of AI together! 💪🔥
         </p>
       </div>
-      <Skills />
+      <Skills skills={skills} />
     </section>
   );
 };
