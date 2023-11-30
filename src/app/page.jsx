@@ -1,12 +1,73 @@
 "use client";
-import { Canvas } from "@react-three/fiber";
-import { Suspense, useState, useEffect } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Suspense, useState, useEffect, useRef } from "react";
+import {
+  PointLight,
+  Points,
+  PointsMaterial,
+  BufferGeometry,
+  Vector3,
+  Color,
+} from "three";
+
 import Loading from "./loading";
 import Sky from "./models/Sky";
 import Island from "./models/BetterIsland";
 import Bird from "./models/Bird";
 import Plane from "./models/BetterPlane";
 import HomeInfo from "./HomeInfo";
+
+// Utility to create particle positions
+function createParticles(count, distance) {
+  const positions = [];
+  for (let i = 0; i < count; i++) {
+    const vertex = new Vector3();
+    vertex.x = Math.random() * distance - distance / 2;
+    vertex.y = Math.random() * distance - distance / 2;
+    vertex.z = Math.random() * distance - distance / 2;
+    positions.push(vertex.x, vertex.y, vertex.z);
+  }
+  return new Float32Array(positions);
+}
+
+// Dynamic Point Light Component
+const MovingLight = () => {
+  const lightRef = useRef();
+
+  useFrame(({ clock }) => {
+    const time = clock.getElapsedTime();
+    lightRef.current.position.x = Math.sin(time) * 10;
+    lightRef.current.position.y = Math.cos(time) * 10;
+    lightRef.current.position.z = Math.cos(time) * 10;
+    lightRef.current.intensity = 2 + Math.sin(time * 2);
+  });
+
+  return <pointLight ref={lightRef} args={["#a2b9c8", 2, 100]} castShadow />;
+};
+
+// Particle System Component
+const Particles = () => {
+  const particlesRef = useRef();
+  const particlePositions = createParticles(1000, 500);
+
+  useFrame(() => {
+    particlesRef.current.rotation.y += 0.001; // Rotate particles for effect
+  });
+
+  return (
+    <points ref={particlesRef}>
+      <bufferGeometry>
+        <bufferAttribute
+          attachObject={["attributes", "position"]}
+          count={particlePositions.length / 3}
+          array={particlePositions}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <pointsMaterial args={[{ color: new Color("#ffffff"), size: 0.5 }]} />
+    </points>
+  );
+};
 
 export default function Home() {
   const [isRotating, setIsRotating] = useState(false);
@@ -22,7 +83,7 @@ export default function Home() {
     function adjustForScreenSize() {
       if (window.innerWidth < 768) {
         setScreenScale([1.5, 1.5, 1.5]);
-        setPlaneScale([0.015, 0.015, 0.015]);
+        setPlaneScale([0.013, 0.013, 0.013]);
         setPlanePosition([-1, -3, 1]);
       } else {
         setScreenScale([1.7, 1.7, 1.7]);
@@ -70,7 +131,8 @@ export default function Home() {
             intensity={1.5}
             distance={100}
           />
-
+          <MovingLight /> {/* Dynamic light */}
+          <Particles /> {/* Particle system */}
           <Sky isRotating={isRotating} />
           <Bird />
           <Island
@@ -87,7 +149,6 @@ export default function Home() {
             position={planePosition}
             rotation={[0, 20, 0]}
           />
-
           {/* <Alien
             position={[0, -23, -15]}
             scale={[0.05, 0.05, 0.05]}
