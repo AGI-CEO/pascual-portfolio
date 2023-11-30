@@ -9,7 +9,7 @@ const Bird = () => {
   const { actions } = useAnimations(animations, birdRef);
 
   useEffect(() => {
-    console.log(actions);
+    //console.log(actions);
     actions["Take 001"].play();
   }, []);
 

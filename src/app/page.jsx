@@ -65,7 +65,7 @@ const Particles = () => {
       object={
         new Points(
           geometry,
-          new PointsMaterial({ color: "#red", size: 0.0001 })
+          new PointsMaterial({ color: "gold", size: 0.0001 })
         )
       }
     />
@@ -106,9 +106,12 @@ export default function Home() {
   }, []);
   useEffect(() => {
     // Simulate loading
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 2000); // Increase this delay if necessary
+
+    // Cleanup timer on unmount
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -118,61 +121,66 @@ export default function Home() {
           <Loading />
         </div>
       ) : (
-        <Canvas
-          className={`w-full h-screen bg-transparent ${
-            isRotating ? "cursor-grabbing" : "cursor-grab"
-          }`}
-          camera={{ near: 0.1, far: 10000 }}
+        <div
+          className={`w-full h-screen bg-transparent`}
+          style={{ opacity: isLoading ? 0 : 1, transition: "opacity 5s" }}
         >
-          <EffectComposer>
-            <Bloom
-              luminanceThreshold={0.01}
-              luminanceSmoothing={0.3}
-              height={100}
-            />
-            <directionalLight
-              position={[1, 1, 1]}
-              intensity={2.5}
-              color="#a2b9c8"
-            />
-            <ambientLight intensity={0.3} />
-            <hemisphereLight
-              skyColor="#6a89cc"
-              groundColor="#b8b8b8"
-              intensity={0.75}
-            />
-            <pointLight
-              position={[-1, 2, -1]}
-              color="#c7d5e0"
-              intensity={1.5}
-              distance={100}
-            />
-            <MovingLight /> {/* Dynamic light */}
-            <Particles /> {/* Particle system */}
-            <Sky isRotating={isRotating} />
-            <Bird />
-            <Island
-              position={screenPosition}
-              scale={screenScale}
-              rotation={rotation}
-              isRotating={isRotating}
-              setIsRotating={setIsRotating}
-              setCurrentStage={setCurrentStage}
-            />
-            <Plane
-              isRotating={isRotating}
-              scale={planeScale}
-              position={planePosition}
-              rotation={[0, 20, 0]}
-            />
-            {/* <Alien
+          <Canvas
+            className={`w-full h-screen bg-transparent ${
+              isRotating ? "cursor-grabbing" : "cursor-grab"
+            }`}
+            camera={{ near: 0.1, far: 10000 }}
+          >
+            <EffectComposer>
+              <Bloom
+                luminanceThreshold={0.01}
+                luminanceSmoothing={0.3}
+                height={100}
+              />
+              <directionalLight
+                position={[1, 1, 1]}
+                intensity={2.5}
+                color="#a2b9c8"
+              />
+              <ambientLight intensity={0.3} />
+              <hemisphereLight
+                skyColor="#6a89cc"
+                groundColor="#b8b8b8"
+                intensity={0.75}
+              />
+              <pointLight
+                position={[-1, 2, -1]}
+                color="#c7d5e0"
+                intensity={1.5}
+                distance={100}
+              />
+              <MovingLight /> {/* Dynamic light */}
+              <Particles /> {/* Particle system */}
+              <Sky isRotating={isRotating} />
+              <Bird />
+              <Island
+                position={screenPosition}
+                scale={screenScale}
+                rotation={rotation}
+                isRotating={isRotating}
+                setIsRotating={setIsRotating}
+                setCurrentStage={setCurrentStage}
+              />
+              <Plane
+                isRotating={isRotating}
+                scale={planeScale}
+                position={planePosition}
+                rotation={[0, 20, 0]}
+              />
+              {/* <Alien
             position={[0, -23, -15]}
             scale={[0.05, 0.05, 0.05]}
             rotation={rotation}
             isRotating={isRotating}
       />*/}
-          </EffectComposer>
-        </Canvas>
+            </EffectComposer>
+          </Canvas>
+        </div>
       )}
     </main>
   );

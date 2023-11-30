@@ -133,7 +133,7 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
     document.addEventListener("keyup", handleKeyUp);
 
     // Play the animation
-    console.log(actions);
+    //console.log(actions);
 
     actions["Scene"].play();
 
