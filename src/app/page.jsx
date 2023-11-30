@@ -21,13 +21,13 @@ export default function Home() {
   useEffect(() => {
     function adjustForScreenSize() {
       if (window.innerWidth < 768) {
-        setScreenScale([1.3, 1.5, 1.3]);
-        setPlaneScale([0.05, 0.05, 0.05]);
-        setPlanePosition([0, -10, -10]);
+        setScreenScale([1.5, 1.5, 1.5]);
+        setPlaneScale([0.015, 0.015, 0.015]);
+        setPlanePosition([-1, -3, 1]);
       } else {
         setScreenScale([1.7, 1.7, 1.7]);
-        setPlaneScale([0.05, 0.05, 0.05]);
-        setPlanePosition([0, -10, -10]);
+        setPlaneScale([0.015, 0.015, 0.015]);
+        setPlanePosition([-1, -3, 1]);
       }
     }
 
@@ -53,13 +53,24 @@ export default function Home() {
         camera={{ near: 0.1, far: 10000 }}
       >
         <Suspense fallback={Loading}>
-          <directionalLight position={[1, 1, 1]} intensity={2} />
-          <ambientLight intensity={0.5} />
-          <hemisphereLight
-            skyColor="#b1e1ff"
-            groundColor="#000000"
-            intensity={1.0}
+          <directionalLight
+            position={[1, 1, 1]}
+            intensity={2.5}
+            color="#a2b9c8"
           />
+          <ambientLight intensity={0.3} />
+          <hemisphereLight
+            skyColor="#6a89cc"
+            groundColor="#b8b8b8"
+            intensity={0.75}
+          />
+          <pointLight
+            position={[-1, 2, -1]}
+            color="#c7d5e0"
+            intensity={1.5}
+            distance={100}
+          />
+
           <Sky isRotating={isRotating} />
           <Bird />
           <Island
