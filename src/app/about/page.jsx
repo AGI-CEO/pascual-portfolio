@@ -4,7 +4,7 @@ import Skills from "./Skills";
 
 const About = () => {
   return (
-    <section className="max-container m-5 p-5 w-1/2 justify-center mx-auto">
+    <section className="max-container m-5 p-5 w-5/6 justify-center mx-auto">
       <h1 className="head-text text-3xl text-center ">
         Hi, I'm{" "}
         <span className="font-semibold bg-gradient-to-br from-yellow-300 to-pink-500 text-transparent  bg-clip-text items-center justify-center flex flex-row text-3xl text-center">

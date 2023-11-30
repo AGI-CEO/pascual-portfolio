@@ -37,7 +37,7 @@ const Skills = () => {
     <>
       {/* Filter dropdown */}
       <div className="flex dropdown mx-auto justify-center">
-        <div tabIndex={0} role="button" className="btn m-1">
+        <div tabIndex={0} role="button" className="btn m-1 w-full">
           {filter ? filter : "Filter by skill type"}
         </div>
         <ul className="dropdown-content z-[1] menu  m-5 shadow bg-base-100 rounded-box  grid grid-cols-2  mx-1 px-1">
@@ -48,7 +48,13 @@ const Skills = () => {
           </li>
           {skillTypes.map((type) => (
             <li key={type}>
-              <a role="button" onClick={() => setFilter(type)}>
+              <a
+                role="button"
+                onClick={() => {
+                  console.log(`Setting filter to: ${type}`);
+                  setFilter(type);
+                }}
+              >
                 {type}
               </a>
             </li>
