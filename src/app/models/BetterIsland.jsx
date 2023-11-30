@@ -80,7 +80,9 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
 
   useFrame(() => {
     if (!isRotating) {
-      rotationSpeed.current *= dampingFactor;
+      const speed = Math.abs(rotationSpeed.current) * dampingFactor;
+
+      rotationSpeed.current = Math.sign(rotationSpeed.current) * speed;
 
       if (rotationSpeed.current > 0.001) {
         rotationSpeed.current *= dampingFactor;
@@ -122,6 +124,11 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
     canvas.addEventListener("pointerdown", handlePointerDown);
     canvas.addEventListener("pointerup", handlePointerUp);
     canvas.addEventListener("pointermove", handlePointerMove);
+    canvas.addEventListener("touchstart", handlePointerDown, {
+      passive: false,
+    });
+    canvas.addEventListener("touchend", handlePointerUp, { passive: false });
+    canvas.addEventListener("touchmove", handlePointerMove, { passive: false });
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keyup", handleKeyUp);
 
@@ -134,6 +141,9 @@ const Island = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
       canvas.removeEventListener("pointerdown", handlePointerDown);
       canvas.removeEventListener("pointerup", handlePointerUp);
       canvas.removeEventListener("pointermove", handlePointerMove);
+      canvas.removeEventListener("touchstart", handlePointerDown);
+      canvas.removeEventListener("touchend", handlePointerUp);
+      canvas.removeEventListener("touchmove", handlePointerMove);
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
     };
