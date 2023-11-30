@@ -109,20 +109,19 @@ export default function Home() {
       <div className="absolute top-28 left-0 right-0 z-10 flex items-center justify-center">
         {currentStage && <HomeInfo currentStage={currentStage} />}
       </div>
-
-      <Canvas
-        className={`w-full h-screen bg-transparent ${
-          isRotating ? "cursor-grabbing" : "cursor-grab"
-        }`}
-        camera={{ near: 0.1, far: 10000 }}
-      >
-        <EffectComposer>
-          <Bloom
-            luminanceThreshold={0.01}
-            luminanceSmoothing={0.3}
-            height={100}
-          />
-          <Suspense fallback={Loading}>
+      <Suspense fallback={Loading}>
+        <Canvas
+          className={`w-full h-screen bg-transparent ${
+            isRotating ? "cursor-grabbing" : "cursor-grab"
+          }`}
+          camera={{ near: 0.1, far: 10000 }}
+        >
+          <EffectComposer>
+            <Bloom
+              luminanceThreshold={0.01}
+              luminanceSmoothing={0.3}
+              height={100}
+            />
             <directionalLight
               position={[1, 1, 1]}
               intensity={2.5}
@@ -164,9 +163,9 @@ export default function Home() {
             rotation={rotation}
             isRotating={isRotating}
       />*/}
-          </Suspense>
-        </EffectComposer>
-      </Canvas>
+          </EffectComposer>
+        </Canvas>
+      </Suspense>
     </main>
   );
 }
