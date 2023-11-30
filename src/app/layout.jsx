@@ -1,5 +1,6 @@
 import "./globals.css";
 import NavBar from "./NavBar";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
   title: "Blaise Pascual's Portfolio",
@@ -12,6 +13,7 @@ export default function RootLayout({ children }) {
       <body>
         <NavBar />
         {children}
+        <Analytics />
       </body>
     </html>
   );
